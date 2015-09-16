@@ -11,9 +11,19 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var timeLabel: UILabel!
+    let date = NSDate()
+    let dateFormatter = NSDateFormatter()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_GB")
+        dateFormatter.dateStyle = .NoStyle
+        dateFormatter.timeStyle = .MediumStyle
+        
+        self.timeLabel.text = dateFormatter.stringFromDate(date)
     }
 
     override func didReceiveMemoryWarning() {
