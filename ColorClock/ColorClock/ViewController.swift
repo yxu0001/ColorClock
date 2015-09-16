@@ -12,7 +12,11 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var timeLabel: UILabel!
     let dateFormatter = NSDateFormatter()
+    let calendar = NSCalendar.currentCalendar()
+    let flags = NSCalendarUnit.Hour.union(.Minute).union(.Second)
+    
     var timer: NSTimer?
+    var backgroundColor: UIColor?
     
     //= NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "updateTimer:", userInfo: nil, repeats: true)
     
@@ -33,6 +37,8 @@ class ViewController: UIViewController {
         
         let date = NSDate()
         self.timeLabel.text = dateFormatter.stringFromDate(date)
+        
+        self.view.backgroundColor = UIColor.blueColor()
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,7 +49,17 @@ class ViewController: UIViewController {
     func updateTimer(timer: NSTimer)
     {
         let date = NSDate()
+    
+        let components = calendar.components(flags, fromDate:date)
+        
         self.timeLabel.text = dateFormatter.stringFromDate(date)
+        let hour = CGFloat(components.hour)
+        let minute = CGFloat(components.minute)
+        let second = CGFloat(components.second)
+        
+        UIView.animateWithDuration(1) {
+            self.view.backgroundColor = UIColor(red: hour/24.0, green: minute/60.0, blue: second/60.0, alpha: 1)
+        }
     }
     
 }
